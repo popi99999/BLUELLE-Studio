@@ -112,14 +112,20 @@ final class CameraService: NSObject, ObservableObject {
         frames = monitor
         frameTap = FrameTap(monitor: monitor)
         super.init()
+        // The interface preview (simulator, UI tests) never runs the camera, so session events there are noise.
+        guard !isPreview else { return }
         observers.append(NotificationCenter.default.addObserver(forName: .AVCaptureSessionWasInterrupted, object: session, queue: .main) { [weak self] _ in
             self?.ready = false
             self?.error = "Fotocamera interrotta da iOS. Torna all’app per riprendere."
         })
         observers.append(NotificationCenter.default.addObserver(forName: .AVCaptureSessionInterruptionEnded, object: session, queue: .main) { [weak self] _ in self?.start() })
         observers.append(NotificationCenter.default.addObserver(forName: .AVCaptureSessionRuntimeError, object: session, queue: .main) { [weak self] notification in
-            self?.ready = false
-            self?.error = (notification.userInfo?[AVCaptureSessionErrorKey] as? Error)?.localizedDescription ?? "Errore della fotocamera. Riprova."
+            guard let self else { return }
+            self.ready = false
+            let failure = notification.userInfo?[AVCaptureSessionErrorKey] as? AVError
+            // iOS can reset its media services (for example after a call); the camera only needs to be started again.
+            if failure?.code == .mediaServicesWereReset { self.start(); return }
+            self.error = "Errore della fotocamera (\(failure?.code.rawValue ?? 0)). Chiudi e riapri l’app."
         })
     }
 
