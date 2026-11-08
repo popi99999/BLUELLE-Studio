@@ -6,6 +6,7 @@ final class StudioUITests: XCTestCase {
         app.launchArguments = ["--ui-testing"]
         app.launch()
         XCTAssertTrue(app.buttons["newProduct"].waitForExistence(timeout: 10))
+        expectNoAlert(app)
         XCTAssertFalse(app.buttons["shutter"].isEnabled, "Simulator must not pretend to capture photos")
         app.buttons["newProduct"].tap()
         let field = app.alerts.textFields.firstMatch
@@ -36,6 +37,7 @@ final class StudioUITests: XCTestCase {
         app.launchArguments = ["--ui-testing"]
         app.launch()
         XCTAssertTrue(app.buttons["newProduct"].waitForExistence(timeout: 10))
+        expectNoAlert(app)
         XCTAssertTrue(app.buttons["togglePeaking"].exists)
         app.buttons["togglePeaking"].tap()
         app.buttons["togglePeaking"].tap()
@@ -72,6 +74,15 @@ final class StudioUITests: XCTestCase {
         let gone = expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: renamed)
         wait(for: [gone], timeout: 5)
         attach(app, name: "04-archivio-vuoto")
+    }
+
+    /// A fresh launch must not greet the user with an error.
+    private func expectNoAlert(_ app: XCUIApplication, file: StaticString = #filePath, line: UInt = #line) {
+        let alert = app.alerts.firstMatch
+        guard alert.waitForExistence(timeout: 2) else { return }
+        let texts = alert.staticTexts.allElementsBoundByIndex.map(\.label).joined(separator: " | ")
+        XCTFail("Unexpected alert at launch: \(texts)", file: file, line: line)
+        if alert.buttons["OK"].exists { alert.buttons["OK"].tap() }
     }
 
     private func attach(_ app: XCUIApplication, name: String) {
