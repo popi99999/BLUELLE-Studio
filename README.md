@@ -4,6 +4,14 @@ Fotocamera nativa per iPhone dedicata a prodotti moda: una serie coerente di fot
 
 **Prima versione da provare su un iPhone reale.** I controlli sul nucleo sono eseguibili sul Mac; la build iOS e le schermate del simulatore sono verificate dal workflow GitHub Actions. Un simulatore non può verificare messa a fuoco, colori o RAW di una fotocamera fisica. Non è stata misurata una percentuale di miglioramento rispetto a Fotocamera Apple.
 
+<p>
+  <img src="docs/screenshots/studio.png" width="230" alt="Schermata di scatto nel simulatore">
+  <img src="docs/screenshots/controlli.png" width="230" alt="Controlli colore con anteprima">
+  <img src="docs/screenshots/archivio.png" width="230" alt="Archivio dei prodotti">
+</p>
+
+Anteprime reali dal simulatore: il riquadro nero sostituisce la fotocamera fisica, senza simulare scatti. [Build e prova della navigazione superate](https://github.com/popi99999/BLUELLE-Studio/actions/runs/42519818265), insieme ai 15 controlli sul nucleo.
+
 ## Cosa include
 
 - Obiettivo posteriore principale fisso a 1×, senza zoom digitale o passaggi automatici al macro.
@@ -81,3 +89,4 @@ Per validare l’hardware, segui [la prova su iPhone](docs/device-validation.md)
 - [Dimensioni massime e formato attivo](https://developer.apple.com/documentation/avfoundation/avcapturephotooutput/maxphotodimensions).
 - [Cartoncino neutro e gray-world gains](https://developer.apple.com/documentation/avfoundation/avcapturedevice/grayworlddevicewhitebalancegains).
 - [Limiti e completamento del blocco bilanciamento](https://developer.apple.com/documentation/avfoundation/avcapturedevice/setwhitebalancemodelocked(with:completionhandler:)).
+
