@@ -1,0 +1,40 @@
+name: iOS build and interface checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: macos-15
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify original storage and capture guidance
+        run: swift run StudioCoreChecks
+      - name: Install project generator
+        run: brew install xcodegen
+      - name: Generate Xcode project
+        run: xcodegen generate
+      - name: Build and test on iPhone simulator
+        shell: bash
+        run: |
+          STUDIO_SIMULATOR_ID=$(xcrun simctl list devices available --json | python3 -c 'import json,sys; data=json.load(sys.stdin); print(next(d["udid"] for devices in data["devices"].values() for d in devices if d["name"].startswith("iPhone")))')
+          xcodebuild test -project BluelleStudio.xcodeproj -scheme BluelleStudio -destination "platform=iOS Simulator,id=$STUDIO_SIMULATOR_ID" -derivedDataPath build/DerivedData -resultBundlePath build/Interface.xcresult CODE_SIGNING_ALLOWED=NO
+      - name: Export interface screenshots
+        if: always()
+        run: |
+          if [ -d build/Interface.xcresult ]; then
+            xcrun xcresulttool export attachments --path build/Interface.xcresult --output-path build/screenshots
+          fi
+      - name: Save simulator app, screenshots and test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: BLUELLE-Studio-simulator-and-checks
+          path: |
+            build/Interface.xcresult
+            build/screenshots
+            build/DerivedData/Build/Products/Debug-iphonesimulator/BluelleStudio.app
+          retention-days: 14

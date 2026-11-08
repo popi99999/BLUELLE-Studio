@@ -1,0 +1,478 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0AAC6BFF169822E73234B4F3 /* BluelleStudioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171B93903BDE94C4DB825C89 /* BluelleStudioApp.swift */; };
+		22952642174208EA44BE3CFD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6147AFEADAEBCCF4ABF906CC /* Assets.xcassets */; };
+		258C7B6157DBA64306BFDB39 /* CaptureAdvice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680A262BB52593AE1E6A8B3E /* CaptureAdvice.swift */; };
+		4DC744A02A76B0FF9FA76EDD /* CameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04769CB3D59FB773B8B0586B /* CameraPreview.swift */; };
+		799784930E2ABB522E590D24 /* StudioUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817412B6A6C3D9E972D8FB8F /* StudioUITests.swift */; };
+		85E33AA60B39F2B0A75213CA /* ProductSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECDE3C3499CF389EFFBFE58 /* ProductSession.swift */; };
+		9ADCEA2E7B7FD844555C8958 /* LibraryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452C3F982C48C2DC07053282 /* LibraryModel.swift */; };
+		9CDE5D4310E9DDABAE986ED7 /* DiskLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E34FB96D3F64DEE00619F1B /* DiskLibrary.swift */; };
+		9D668A32B1BE3D85295E22B6 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A49532A26652053EBAEB3B7 /* LibraryView.swift */; };
+		A35F9EE452B33E217B95939D /* StudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF77A89C7A3A74717BE76895 /* StudioView.swift */; };
+		B47EDC3738624313571C13FF /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 18A46C2EE1BE658A5097BDFC /* PrivacyInfo.xcprivacy */; };
+		DF5C8CC77E07B87B7319B322 /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046DF4D4ACCEA78E181B85C3 /* CameraService.swift */; };
+		FBD8A70AA057A3C7340F02CB /* CameraControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A74722BD4B7264363D52B9 /* CameraControls.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0D2BC17D212247C336FA9423 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB0DE7CE7212B4D485F2E529 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D4D6649DD9712BE93CCD84E2;
+			remoteInfo = BluelleStudio;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		03A74722BD4B7264363D52B9 /* CameraControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraControls.swift; sourceTree = "<group>"; };
+		046DF4D4ACCEA78E181B85C3 /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
+		04769CB3D59FB773B8B0586B /* CameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreview.swift; sourceTree = "<group>"; };
+		171B93903BDE94C4DB825C89 /* BluelleStudioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluelleStudioApp.swift; sourceTree = "<group>"; };
+		18A46C2EE1BE658A5097BDFC /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		3A49532A26652053EBAEB3B7 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		452C3F982C48C2DC07053282 /* LibraryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryModel.swift; sourceTree = "<group>"; };
+		5E34FB96D3F64DEE00619F1B /* DiskLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskLibrary.swift; sourceTree = "<group>"; };
+		6147AFEADAEBCCF4ABF906CC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		680A262BB52593AE1E6A8B3E /* CaptureAdvice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureAdvice.swift; sourceTree = "<group>"; };
+		817412B6A6C3D9E972D8FB8F /* StudioUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioUITests.swift; sourceTree = "<group>"; };
+		AF2292A75DBDE868303376E1 /* BluelleStudioUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = BluelleStudioUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EED272BFBF48746CE192E8ED /* BluelleStudio.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = BluelleStudio.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF77A89C7A3A74717BE76895 /* StudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioView.swift; sourceTree = "<group>"; };
+		FECDE3C3499CF389EFFBFE58 /* ProductSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSession.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0A3E421C7C9057BAD96625C8 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				452C3F982C48C2DC07053282 /* LibraryModel.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		5306A0DC5DF02808F4083E5C /* StudioCore */ = {
+			isa = PBXGroup;
+			children = (
+				680A262BB52593AE1E6A8B3E /* CaptureAdvice.swift */,
+				5E34FB96D3F64DEE00619F1B /* DiskLibrary.swift */,
+				FECDE3C3499CF389EFFBFE58 /* ProductSession.swift */,
+			);
+			name = StudioCore;
+			path = Sources/StudioCore;
+			sourceTree = "<group>";
+		};
+		9CE3AF15CC7D4CDF849EF8CC /* App */ = {
+			isa = PBXGroup;
+			children = (
+				6147AFEADAEBCCF4ABF906CC /* Assets.xcassets */,
+				171B93903BDE94C4DB825C89 /* BluelleStudioApp.swift */,
+				18A46C2EE1BE658A5097BDFC /* PrivacyInfo.xcprivacy */,
+				DD9F567B43F05E93C1C45DF6 /* Camera */,
+				0A3E421C7C9057BAD96625C8 /* Library */,
+				A50116203C3E6F06E16E051B /* Views */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		A50116203C3E6F06E16E051B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				03A74722BD4B7264363D52B9 /* CameraControls.swift */,
+				3A49532A26652053EBAEB3B7 /* LibraryView.swift */,
+				EF77A89C7A3A74717BE76895 /* StudioView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C7370C4FE3070D2FA5B75184 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EED272BFBF48746CE192E8ED /* BluelleStudio.app */,
+				AF2292A75DBDE868303376E1 /* BluelleStudioUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D2591CC49019AD87A5A2AFE0 /* UITests */ = {
+			isa = PBXGroup;
+			children = (
+				817412B6A6C3D9E972D8FB8F /* StudioUITests.swift */,
+			);
+			path = UITests;
+			sourceTree = "<group>";
+		};
+		DD9F567B43F05E93C1C45DF6 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				04769CB3D59FB773B8B0586B /* CameraPreview.swift */,
+				046DF4D4ACCEA78E181B85C3 /* CameraService.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		FF285AEE8BE0E2AAEF171814 = {
+			isa = PBXGroup;
+			children = (
+				9CE3AF15CC7D4CDF849EF8CC /* App */,
+				5306A0DC5DF02808F4083E5C /* StudioCore */,
+				D2591CC49019AD87A5A2AFE0 /* UITests */,
+				C7370C4FE3070D2FA5B75184 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5CBFAFDE2A6206BBB9B2D462 /* BluelleStudioUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F675D460404C99CFCCEA0BF1 /* Build configuration list for PBXNativeTarget "BluelleStudioUITests" */;
+			buildPhases = (
+				395F6D10E6AEC2DC504C9353 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2D1CFFC65D4E1A28C7C92DCF /* PBXTargetDependency */,
+			);
+			name = BluelleStudioUITests;
+			packageProductDependencies = (
+			);
+			productName = BluelleStudioUITests;
+			productReference = AF2292A75DBDE868303376E1 /* BluelleStudioUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		D4D6649DD9712BE93CCD84E2 /* BluelleStudio */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CF32621F940CBF4C1A2D48BD /* Build configuration list for PBXNativeTarget "BluelleStudio" */;
+			buildPhases = (
+				7673A115B238E81B87CD2865 /* Sources */,
+				20BC09AF627EE37B0DBDABE6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BluelleStudio;
+			packageProductDependencies = (
+			);
+			productName = BluelleStudio;
+			productReference = EED272BFBF48746CE192E8ED /* BluelleStudio.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DB0DE7CE7212B4D485F2E529 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					5CBFAFDE2A6206BBB9B2D462 = {
+						TestTargetID = D4D6649DD9712BE93CCD84E2;
+					};
+				};
+			};
+			buildConfigurationList = 6FBEAB5E3045227B3AF8E917 /* Build configuration list for PBXProject "BluelleStudio" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = FF285AEE8BE0E2AAEF171814;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = C7370C4FE3070D2FA5B75184 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D4D6649DD9712BE93CCD84E2 /* BluelleStudio */,
+				5CBFAFDE2A6206BBB9B2D462 /* BluelleStudioUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		20BC09AF627EE37B0DBDABE6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				22952642174208EA44BE3CFD /* Assets.xcassets in Resources */,
+				B47EDC3738624313571C13FF /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		395F6D10E6AEC2DC504C9353 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				799784930E2ABB522E590D24 /* StudioUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7673A115B238E81B87CD2865 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0AAC6BFF169822E73234B4F3 /* BluelleStudioApp.swift in Sources */,
+				FBD8A70AA057A3C7340F02CB /* CameraControls.swift in Sources */,
+				4DC744A02A76B0FF9FA76EDD /* CameraPreview.swift in Sources */,
+				DF5C8CC77E07B87B7319B322 /* CameraService.swift in Sources */,
+				258C7B6157DBA64306BFDB39 /* CaptureAdvice.swift in Sources */,
+				9CDE5D4310E9DDABAE986ED7 /* DiskLibrary.swift in Sources */,
+				9ADCEA2E7B7FD844555C8958 /* LibraryModel.swift in Sources */,
+				9D668A32B1BE3D85295E22B6 /* LibraryView.swift in Sources */,
+				85E33AA60B39F2B0A75213CA /* ProductSession.swift in Sources */,
+				A35F9EE452B33E217B95939D /* StudioView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2D1CFFC65D4E1A28C7C92DCF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D4D6649DD9712BE93CCD84E2 /* BluelleStudio */;
+			targetProxy = 0D2BC17D212247C336FA9423 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		21F2158D63F4293DF69D8221 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bluelle.studio.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BluelleStudio;
+			};
+			name = Release;
+		};
+		29C68232138B7BCEE12F4F98 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bluelle.studio;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		3BD9FB691ACBAA966DAC330C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		6A3AF02480506E362A1116D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bluelle.studio.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BluelleStudio;
+			};
+			name = Debug;
+		};
+		C45B0DE3D6B123F4E121E839 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bluelle.studio;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		FB0D5A9CE3400B6200CFEA99 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6FBEAB5E3045227B3AF8E917 /* Build configuration list for PBXProject "BluelleStudio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3BD9FB691ACBAA966DAC330C /* Debug */,
+				FB0D5A9CE3400B6200CFEA99 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CF32621F940CBF4C1A2D48BD /* Build configuration list for PBXNativeTarget "BluelleStudio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C45B0DE3D6B123F4E121E839 /* Debug */,
+				29C68232138B7BCEE12F4F98 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F675D460404C99CFCCEA0BF1 /* Build configuration list for PBXNativeTarget "BluelleStudioUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A3AF02480506E362A1116D3 /* Debug */,
+				21F2158D63F4293DF69D8221 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DB0DE7CE7212B4D485F2E529 /* Project object */;
+}
