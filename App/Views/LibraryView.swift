@@ -3,6 +3,9 @@ import SwiftUI
 struct LibraryView: View {
     @EnvironmentObject private var library: LibraryModel
     @Environment(\.dismiss) private var dismiss
+    @State private var pendingDelete: ProductSession?
+    @State private var renaming: ProductSession?
+    @State private var newName = ""
 
     var body: some View {
         NavigationStack {
@@ -28,20 +31,35 @@ struct LibraryView: View {
                                 }
                             }.padding(.vertical, 5)
                         }
+                        .swipeActions {
+                            Button("Elimina", role: .destructive) { pendingDelete = product }
+                            Button("Rinomina") { newName = product.name; renaming = product }.tint(.gray)
+                        }
+                        .contextMenu {
+                            Button("Rinomina", systemImage: "pencil") { newName = product.name; renaming = product }
+                            Button("Elimina", systemImage: "trash", role: .destructive) { pendingDelete = product }
+                        }
                     }
                 }
             }
             .navigationTitle("Archivio")
             .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Fine") { dismiss() }.accessibilityIdentifier("closeLibrary") } }
+            .deleteProductAlert(product: $pendingDelete)
+            .renameProductAlert(product: $renaming, name: $newName)
         }.preferredColorScheme(.dark)
     }
 }
 
 private struct ProductGallery: View {
     @EnvironmentObject private var library: LibraryModel
+    @Environment(\.dismiss) private var dismiss
     let productID: UUID
     let closeLibrary: () -> Void
     @State private var share = false
+    @State private var pendingDelete: ProductSession?
+    @State private var renaming: ProductSession?
+    @State private var newName = ""
+    @State private var shotToDelete: ShotRecord?
     private var product: ProductSession? { library.products.first { $0.id == productID } }
 
     var body: some View {
@@ -64,26 +82,51 @@ private struct ProductGallery: View {
                                         HStack { Text(shot.kind.title).font(.subheadline); Spacer(); if shot.raw != nil { Text("RAW").font(.system(size: 8, weight: .bold)).foregroundStyle(StudioTheme.accent) } }
                                         Text("\(shot.width) × \(shot.height)").font(.system(size: 10, design: .monospaced)).foregroundStyle(.secondary)
                                     }
-                                }.buttonStyle(.plain)
+                                }
+                                .buttonStyle(.plain)
+                                .contextMenu {
+                                    Button("Aggiungi a Foto", systemImage: "photo.badge.plus") { library.saveToPhotos([shot], in: product) }
+                                    Button("Elimina foto", systemImage: "trash", role: .destructive) { shotToDelete = shot }
+                                }
                             }
                         }
                         Button("Esporta tutti gli originali", systemImage: "square.and.arrow.up") { share = true }.buttonStyle(.bordered)
-                        Text("JPEG e DNG, quando presente. I file non vengono ridimensionati dall’app; il servizio scelto per condividerli può applicare una propria compressione.")
+                        Button("Aggiungi tutto a Foto", systemImage: "photo.badge.plus") { library.saveToPhotos(product.shots, in: product) }.buttonStyle(.bordered)
+                        Text("JPEG e DNG, quando presente. I file portano il nome del prodotto e della vista e non vengono ridimensionati dall’app; il servizio scelto per condividerli può applicare una propria compressione.")
                             .font(.caption).foregroundStyle(.secondary)
                     }
                 }.padding(20)
             }
         }
         .navigationTitle(product?.name ?? "Prodotto").navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            if let product {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu {
+                        Button("Rinomina", systemImage: "pencil") { newName = product.name; renaming = product }
+                        Button("Elimina prodotto", systemImage: "trash", role: .destructive) { pendingDelete = product }
+                    } label: { Image(systemName: "ellipsis.circle") }
+                        .accessibilityLabel("Altre azioni")
+                }
+            }
+        }
         .sheet(isPresented: $share) { if let product { ShareFiles(urls: library.files(for: product)) } }
+        .deleteProductAlert(product: $pendingDelete) { dismiss() }
+        .renameProductAlert(product: $renaming, name: $newName)
+        .alert("Eliminare questa foto?", isPresented: Binding(get: { shotToDelete != nil }, set: { if !$0 { shotToDelete = nil } }), presenting: shotToDelete) { shot in
+            Button("Elimina", role: .destructive) { if let product { library.deleteShot(shot, in: product) } }
+            Button("Annulla", role: .cancel) {}
+        } message: { _ in Text("Il JPEG e l’eventuale DNG vengono cancellati da questo iPhone. Non si può annullare.") }
     }
 }
 
 private struct ShotDetail: View {
     @EnvironmentObject private var library: LibraryModel
+    @Environment(\.dismiss) private var dismiss
     let product: ProductSession
     let shot: ShotRecord
     @State private var share = false
+    @State private var confirmDelete = false
 
     var body: some View {
         VStack(spacing: 16) {
@@ -96,13 +139,58 @@ private struct ShotDetail: View {
             }.padding(.horizontal)
             HStack {
                 Button("Condividi", systemImage: "square.and.arrow.up") { share = true }.buttonStyle(.bordered)
-                Button("Aggiungi a Foto", systemImage: "photo.badge.plus") { library.saveToPhotos(shot, in: product) }.buttonStyle(.bordered)
+                Button("Aggiungi a Foto", systemImage: "photo.badge.plus") { library.saveToPhotos([shot], in: product) }.buttonStyle(.bordered)
+                Button("Elimina", systemImage: "trash", role: .destructive) { confirmDelete = true }.buttonStyle(.bordered)
+                    .labelStyle(.iconOnly).accessibilityLabel("Elimina foto")
             }.padding(.bottom)
         }
         .navigationTitle(shot.kind.title).navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $share) {
             ShareFiles(urls: [library.url(for: shot, in: product)] + (shot.raw.map { [library.disk.folder(for: product.id).appendingPathComponent($0)] } ?? []))
         }
+        .alert("Eliminare questa foto?", isPresented: $confirmDelete) {
+            Button("Elimina", role: .destructive) { library.deleteShot(shot, in: product); dismiss() }
+            Button("Annulla", role: .cancel) {}
+        } message: { Text("Il JPEG e l’eventuale DNG vengono cancellati da questo iPhone. Non si può annullare.") }
+    }
+}
+
+private extension View {
+    func deleteProductAlert(product: Binding<ProductSession?>, onDelete: @escaping () -> Void = {}) -> some View {
+        modifier(DeleteProductAlert(product: product, onDelete: onDelete))
+    }
+
+    func renameProductAlert(product: Binding<ProductSession?>, name: Binding<String>) -> some View {
+        modifier(RenameProductAlert(product: product, name: name))
+    }
+}
+
+private struct DeleteProductAlert: ViewModifier {
+    @EnvironmentObject private var library: LibraryModel
+    @Binding var product: ProductSession?
+    let onDelete: () -> Void
+
+    func body(content: Content) -> some View {
+        content.alert("Eliminare il prodotto?", isPresented: Binding(get: { product != nil }, set: { if !$0 { product = nil } }), presenting: product) { product in
+            Button("Elimina", role: .destructive) { library.deleteProduct(product); onDelete() }
+            Button("Annulla", role: .cancel) {}
+        } message: { product in
+            Text("“\(product.name)” e i suoi \(product.shots.count) scatti originali vengono cancellati da questo iPhone. Non si può annullare.")
+        }
+    }
+}
+
+private struct RenameProductAlert: ViewModifier {
+    @EnvironmentObject private var library: LibraryModel
+    @Binding var product: ProductSession?
+    @Binding var name: String
+
+    func body(content: Content) -> some View {
+        content.alert("Rinomina prodotto", isPresented: Binding(get: { product != nil }, set: { if !$0 { product = nil } }), presenting: product) { product in
+            TextField("Nome del prodotto", text: $name)
+            Button("Salva") { library.rename(product, to: name) }
+            Button("Annulla", role: .cancel) {}
+        } message: { _ in Text("I nuovi scatti useranno questo nome nei file.") }
     }
 }
 
@@ -129,24 +217,42 @@ private struct ZoomablePhoto: UIViewRepresentable {
 }
 
 private final class PhotoScrollView: UIScrollView, UIScrollViewDelegate {
+    /// Longest side decoded for viewing. A 48 MP original decoded in full needs about 200 MB of memory.
+    private static let viewingSize = 4096
     private let photo = UIImageView()
+    private let spinner = UIActivityIndicatorView(style: .medium)
     private var fitted = false
 
     init(url: URL) {
         super.init(frame: .zero)
         backgroundColor = .black
         delegate = self
-        photo.image = UIImage(contentsOfFile: url.path)
-        photo.frame.size = photo.image?.size ?? .zero
         addSubview(photo)
-        contentSize = photo.frame.size
+        spinner.startAnimating()
+        addSubview(spinner)
         let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTap(_:)))
         tap.numberOfTapsRequired = 2
         addGestureRecognizer(tap)
+        DispatchQueue.global(qos: .userInitiated).async {
+            let image = thumbnail(at: url, maximum: Self.viewingSize)
+            DispatchQueue.main.async { [weak self] in self?.show(image) }
+        }
     }
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+    private func show(_ image: UIImage?) {
+        spinner.stopAnimating()
+        spinner.removeFromSuperview()
+        photo.image = image
+        photo.frame = CGRect(origin: .zero, size: image?.size ?? .zero)
+        contentSize = photo.frame.size
+        fitted = false
+        setNeedsLayout()
+    }
+
     override func layoutSubviews() {
         super.layoutSubviews()
+        spinner.center = CGPoint(x: bounds.midX, y: bounds.midY)
         guard photo.bounds.width > 0, photo.bounds.height > 0, bounds.width > 0, bounds.height > 0 else { return }
         if !fitted {
             let fit = min(bounds.width / photo.bounds.width, bounds.height / photo.bounds.height)

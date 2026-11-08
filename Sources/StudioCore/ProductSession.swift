@@ -23,6 +23,17 @@ public enum ShotKind: String, Codable, CaseIterable, Identifiable, Sendable {
         case .flaw: return "Documenta eventuali difetti senza filtri o ritocchi."
         }
     }
+    /// ASCII label used in exported file names.
+    public var fileLabel: String {
+        switch self {
+        case .front: return "fronte"
+        case .back: return "retro"
+        case .logo: return "logo"
+        case .label: return "etichetta"
+        case .detail: return "tessuto"
+        case .flaw: return "difetti"
+        }
+    }
 }
 
 public struct ShotRecord: Codable, Identifiable, Sendable {
@@ -48,7 +59,7 @@ public struct ProductSession: Codable, Identifiable, Sendable {
 
     public init(name: String) {
         self.id = UUID()
-        self.name = name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "Nuovo prodotto" : name
+        self.name = ProductSession.cleanName(name)
         self.createdAt = Date()
         self.shots = []
     }
@@ -56,6 +67,13 @@ public struct ProductSession: Codable, Identifiable, Sendable {
     public var completedKinds: Set<ShotKind> { Set(shots.map(\.kind)) }
     public var nextKind: ShotKind { ShotKind.allCases.first { !completedKinds.contains($0) } ?? .front }
 
+    /// Trims the name typed by the user; an empty name falls back to `fallback`.
+    public static func cleanName(_ name: String, fallback: String = "Nuovo prodotto") -> String {
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? fallback : String(trimmed.prefix(80))
+    }
+
+    /// File-system friendly version of a product name, used for exported file names.
     public static func safeName(_ name: String) -> String {
         let components = name.components(separatedBy: CharacterSet.alphanumerics.inverted).filter { !$0.isEmpty }
         return components.isEmpty ? "Prodotto" : String(components.joined(separator: "-").prefix(70))

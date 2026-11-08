@@ -10,20 +10,57 @@ Fotocamera nativa per iPhone dedicata a prodotti moda: una serie coerente di fot
   <img src="docs/screenshots/archivio.png" width="230" alt="Archivio dei prodotti">
 </p>
 
-Anteprime reali dal simulatore: il riquadro nero sostituisce la fotocamera fisica, senza simulare scatti. [Build e prova della navigazione superate](https://github.com/popi99999/BLUELLE-Studio/actions/runs/42519818265), insieme ai 15 controlli sul nucleo.
+Anteprime reali dal simulatore: il riquadro nero sostituisce la fotocamera fisica, senza simulare scatti. Il workflow GitHub Actions compila l’app, esegue i 32 controlli sul nucleo e due prove dell’interfaccia (creazione, controlli, archivio, rinomina e cancellazione).
 
 ## Cosa include
 
+**Scatto**
 - Obiettivo posteriore principale fisso a 1×, senza zoom digitale o passaggi automatici al macro.
-- Fuoco al tocco, blocco del fuoco e dell’esposizione, compensazione EV.
-- Blocco del bilanciamento del bianco, temperatura e tinta manuali, calibrazione con cartoncino grigio neutro. Anteprima dal vivo anche nei controlli.
-- JPEG con priorità alla qualità e richiesta della massima dimensione ammessa dal formato attivo. La dimensione effettiva, che può essere inferiore, viene registrata per ogni scatto.
-- JPEG + Bayer RAW (DNG) quando la configurazione del dispositivo lo supporta. La modalità RAW usa una priorità di acquisizione conservativa; il JPEG rimane elaborato dalla pipeline iOS.
-- Timer 0/2/5 secondi; indicazioni basate su ISO, tempo, stato del fuoco e giroscopio. Sono avvisi sul rischio di mosso, **non punteggi di nitidezza**, misure di colore o garanzie di resa.
-- Sessioni per prodotto con sei viste: fronte, retro, logo, etichetta, tessuto e difetti. Una vista già scattata può essere ripetuta.
-- Archivio locale, visualizzazione con zoom, condivisione dei file originali e aggiunta volontaria a Foto.
+- Foto salvate dritte anche con il telefono in orizzontale. Nelle foto dall’alto resta l’ultimo orientamento.
+- Scatto dal pulsante, dai **tasti volume** o dal Controllo fotocamera (iOS 17.2 o successivo), timer 0/2/5/10 secondi.
 
-Non applica ritocchi generativi, rimozione di difetti, saturazione automatica o ricostruzione dei loghi. I dati JPEG/DNG restituiti da AVFoundation vengono conservati senza ricodifica. Le anteprime nell’archivio sono ridotte solo per la visualizzazione.
+**Fuoco**
+- Tocco per mettere a fuoco e misurare la luce in quel punto. Quando la scena cambia, l’app torna all’autofocus continuo al centro: un tocco su un’etichetta non lascia sfocato lo scatto successivo.
+- Blocco del fuoco e **fuoco manuale** con cursore, utile su un supporto per etichette e loghi.
+- **Peaking**: evidenzia in verde i contorni nitidi nell’anteprima.
+
+**Luce**
+- Esposizione automatica con compensazione EV e blocco.
+- **Esposizione manuale**: ISO e tempo, con esposimetro in EV.
+- **Istogramma** dal vivo e avvisi per bianchi bruciati e neri chiusi. **Zebra** colora in rosso le zone bianche senza dettaglio.
+
+**Colore**
+- Blocco del bilanciamento del bianco, temperatura e tinta manuali, calibrazione con cartoncino grigio neutro. Anteprima dal vivo anche nei controlli.
+
+**Composizione**
+- Griglia dei terzi.
+- **Livella**: linea dell’orizzonte con il telefono davanti al capo, inclinazione avanti/indietro, bolla per le foto dall’alto. Diventa verde entro 1°.
+- Indicazioni basate su ISO, tempo, stato del fuoco e giroscopio. Sono avvisi sul rischio di mosso, **non punteggi di nitidezza**, misure di colore o garanzie di resa.
+
+**File**
+- JPEG qualità 95 % alla massima risoluzione del formato attivo, con la massima priorità di dettaglio di iOS. Le dimensioni effettive vengono registrate per ogni scatto.
+- **Apple ProRAW** (DNG) alla piena risoluzione sugli iPhone che lo supportano, con la fusione multi-scatto di iOS. Sugli altri, RAW Bayer a scatto singolo quando disponibile.
+- Nomi leggibili, per esempio `Celine-bianca_03_etichetta.jpg`. Un file esistente non viene mai sovrascritto.
+
+**Archivio**
+- Sessioni per prodotto con sei viste: fronte, retro, logo, etichetta, tessuto e difetti. Una vista già scattata può essere ripetuta.
+- Visualizzazione con zoom, cancellazione di singole foto o di un prodotto con conferma, rinomina.
+- Condivisione degli originali, aggiunta a Foto di una foto o di tutto il prodotto.
+
+Non applica ritocchi generativi, rimozione di difetti, saturazione automatica o ricostruzione dei loghi. I dati JPEG/DNG restituiti da AVFoundation vengono conservati senza ricodifica. Le anteprime nell’archivio sono ridotte solo per la visualizzazione, al massimo 4096 pixel sul lato lungo, per non esaurire la memoria con le foto da 48 MP.
+
+### Rispetto a Fotocamera Apple
+
+| | Fotocamera Apple | BLUELLE Studio |
+|---|---|---|
+| Obiettivo | Può passare da solo al grandangolo o al macro | Sempre il principale 1× |
+| Colore tra le foto | Cambia a ogni scatto | Bloccabile e calibrabile con cartoncino grigio |
+| Esposizione | Automatica, con compensazione | Automatica o manuale (ISO e tempo), istogramma, zebra |
+| Fuoco | Automatico, blocco con pressione lunga | Automatico, punto, blocco o manuale con peaking |
+| RAW | ProRAW sui modelli Pro | ProRAW sui modelli Pro, RAW Bayer sugli altri quando disponibile |
+| Archivio | Mescolato al rullino | Sessioni per prodotto con le sei viste |
+
+L’iPhone è lo stesso e il JPEG resta elaborato da iOS. Il vantaggio è il controllo e la costanza tra le foto, non un sensore diverso. Non è stata ancora misurata la resa su un iPhone reale: vedi la prova su iPhone.
 
 ## Aprire sull’iPhone
 
@@ -47,20 +84,23 @@ xcodegen generate
 
 1. Pulisci la lente, prepara luce diffusa e costante e crea il prodotto con `+`.
 2. In **Controlli**, inquadra un cartoncino grigio neutro al centro per almeno metà fotogramma. Attendi che l’anteprima sia stabile, poi calibra e blocca. Senza cartoncino puoi bloccare il colore attuale, ma non verificarne la fedeltà.
-3. Scatta il fronte. Mantieni la stessa luce per il retro e i dettagli.
-4. Per le etichette, tieni telefono e tessuto paralleli, tocca il testo e aspetta il fuoco. Se sei troppo vicino, allontanati: il principale ha una distanza minima di messa a fuoco e non passa automaticamente al macro.
-5. Controlla le foto ingrandite nell’archivio. Se necessario ripeti una vista. Usa un supporto e il timer quando il tempo è lento.
-6. Esporta da Archivio. Il sistema di condivisione riceve i file integri; app di messaggistica o piattaforme esterne possono comprimerli successivamente.
+3. Metti il telefono su un supporto e raddrizzalo finché la livella è verde. Per un capo bianco abbassa l’esposizione finché Zebra non colora più le zone con trama; per un capo nero controlla l’avviso dei neri chiusi.
+4. Con il treppiede, passa all’esposizione manuale: ISO al minimo e tempo più lungo. Scatta con il timer o con i tasti volume.
+5. Scatta il fronte. Mantieni la stessa luce per il retro e i dettagli.
+6. Per le etichette, tieni telefono e tessuto paralleli: tocca il testo, oppure usa il fuoco manuale con Peaking. Se sei troppo vicino, allontanati: il principale ha una distanza minima di messa a fuoco (indicata in Controlli) e non passa automaticamente al macro.
+7. Controlla le foto ingrandite nell’archivio. Elimina quelle venute male o ripeti la vista.
+8. Esporta da Archivio. Il sistema di condivisione riceve i file integri; app di messaggistica o piattaforme esterne possono comprimerli successivamente.
 
-La luce, il riferimento neutro, la distanza e la stabilità rimangono determinanti. Un DNG richiede sviluppo in un editor; non equivale a un JPEG già corretto.
+La luce, il riferimento neutro, la distanza e la stabilità rimangono determinanti. Un DNG richiede sviluppo in un editor (Lightroom, Foto, Darkroom); non equivale a un JPEG già corretto. Un ProRAW a 48 MP pesa circa 75 MB.
 
 ## File e privacy
 
 - Nessun server, login applicativo, analytics o invio automatico di immagini.
 - Ogni prodotto ha una cartella UUID e un `product.json` nella directory Documenti dell’app, visibile in **File → Sul mio iPhone → BLUELLE Studio**.
 - I file vengono scritti prima di aggiornare atomicamente il manifest. Una scrittura fallita non viene conteggiata come foto riuscita.
+- Per eliminare una foto, prima la si toglie dal manifest e poi si cancellano i file: l’archivio non elenca mai una foto mancante.
 - Un manifest illeggibile viene segnalato senza nascondere gli altri prodotti. I relativi file restano sul dispositivo per il recupero.
-- La fotocamera è l’unico accesso chiesto all’avvio. L’autorizzazione ad aggiungere a Foto viene chiesta solo premendo **Aggiungi a Foto**. L’app non legge la libreria Foto esistente.
+- La fotocamera è l’unico accesso chiesto all’avvio. Il sensore di movimento serve solo per livella, orientamento e avvisi di mosso, senza permessi aggiuntivi. L’autorizzazione ad aggiungere a Foto viene chiesta solo premendo **Aggiungi a Foto**. L’app non legge la libreria Foto esistente.
 - Non raccoglie la posizione. I normali backup e le funzioni di condivisione del sistema restano gestiti da iOS e dall’utente.
 - Nessuna foto personale della libreria usata come riferimento è inclusa nel repository.
 
@@ -70,7 +110,7 @@ La luce, il riferimento neutro, la distanza e la stabilità rimangono determinan
 swift run StudioCoreChecks
 ```
 
-Il runner senza dipendenze verifica limiti del bilanciamento, avvisi di acquisizione, round trip del manifest, byte degli originali conservati, coppia JPEG/RAW, errori di salvataggio e recupero di sessioni sane accanto a manifest danneggiati.
+Il runner senza dipendenze esegue 32 controlli: limiti del bilanciamento, avvisi di acquisizione, livella e orientamento dello scatto, scala dei tempi manuali, istogramma/zebra/peaking su fotogrammi sintetici, round trip del manifest, byte degli originali conservati, coppia JPEG/RAW, nomi dei file, cancellazione e rinomina, errori di salvataggio e recupero di sessioni sane accanto a manifest danneggiati.
 
 Con Xcode:
 

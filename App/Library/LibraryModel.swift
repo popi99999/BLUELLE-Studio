@@ -71,21 +71,50 @@ final class LibraryModel: ObservableObject {
         }
     }
 
-    func saveToPhotos(_ shot: ShotRecord, in product: ProductSession) {
-        let jpeg = url(for: shot, in: product)
-        let raw = shot.raw.map { disk.folder(for: product.id).appendingPathComponent($0) }
+    func deleteShot(_ shot: ShotRecord, in product: ProductSession) {
+        guard !busy else { return }
+        do { replace(try disk.deleteShot(productID: product.id, shotID: shot.id)) }
+        catch { self.error = "Foto non eliminata: \(error.localizedDescription)" }
+    }
+
+    func deleteProduct(_ product: ProductSession) {
+        guard !busy else { return }
+        do {
+            try disk.deleteProduct(id: product.id)
+            products.removeAll { $0.id == product.id }
+            if selectedID == product.id { selectedID = products.first?.id }
+        } catch { self.error = "Prodotto non eliminato: \(error.localizedDescription)" }
+    }
+
+    func rename(_ product: ProductSession, to name: String) {
+        guard !busy else { return }
+        do { replace(try disk.rename(productID: product.id, to: name)) }
+        catch { self.error = "Nome non modificato: \(error.localizedDescription)" }
+    }
+
+    private func replace(_ product: ProductSession) {
+        if let index = products.firstIndex(where: { $0.id == product.id }) { products[index] = product }
+    }
+
+    /// Adds each shot as one asset in Photos: the JPEG, with the DNG attached as its RAW alternate when present.
+    func saveToPhotos(_ shots: [ShotRecord], in product: ProductSession) {
+        guard !shots.isEmpty else { return }
+        let folder = disk.folder(for: product.id)
+        let files = shots.map { shot in (folder.appendingPathComponent(shot.jpeg), shot.raw.map { folder.appendingPathComponent($0) }) }
         PHPhotoLibrary.requestAuthorization(for: .addOnly) { status in
             guard status == .authorized || status == .limited else {
                 DispatchQueue.main.async { self.error = "Accesso a Foto negato. Puoi condividere i file oppure abilitarlo in Impostazioni." }
                 return
             }
             PHPhotoLibrary.shared().performChanges {
-                let request = PHAssetCreationRequest.forAsset()
-                request.addResource(with: .photo, fileURL: jpeg, options: nil)
-                if let raw { request.addResource(with: .alternatePhoto, fileURL: raw, options: nil) }
+                for (jpeg, raw) in files {
+                    let request = PHAssetCreationRequest.forAsset()
+                    request.addResource(with: .photo, fileURL: jpeg, options: nil)
+                    if let raw { request.addResource(with: .alternatePhoto, fileURL: raw, options: nil) }
+                }
             } completionHandler: { success, error in
                 DispatchQueue.main.async {
-                    if success { self.notice = "Originale aggiunto a Foto" }
+                    if success { self.notice = files.count == 1 ? "Originale aggiunto a Foto" : "\(files.count) originali aggiunti a Foto" }
                     else { self.error = error?.localizedDescription ?? "Salvataggio in Foto non riuscito." }
                 }
             }
