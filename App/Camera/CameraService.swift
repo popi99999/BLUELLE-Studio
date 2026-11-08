@@ -456,10 +456,6 @@ final class CameraService: NSObject, ObservableObject {
     }
 
     private func makeSettings(raw: Bool) throws -> AVCapturePhotoSettings {
-        let jpeg: [String: Any] = [
-            AVVideoCodecKey: AVVideoCodecType.jpeg,
-            AVVideoCompressionPropertiesKey: [AVVideoQualityKey: 0.95]
-        ]
         let settings: AVCapturePhotoSettings
         if raw {
             applyProRAW(true)
@@ -467,12 +463,16 @@ final class CameraService: NSObject, ObservableObject {
             guard let format = output.availableRawPhotoPixelFormatTypes.first(where: {
                 proRAW ? AVCapturePhotoOutput.isAppleProRAWPixelFormat($0) : AVCapturePhotoOutput.isBayerRAWPixelFormat($0)
             }) else { throw StudioError.message("RAW non disponibile su questo iPhone.") }
-            settings = AVCapturePhotoSettings(rawPixelFormatType: format, processedFormat: jpeg)
+            // The DNG is the master here; the companion JPEG keeps iOS's default compression.
+            settings = AVCapturePhotoSettings(rawPixelFormatType: format, processedFormat: [AVVideoCodecKey: AVVideoCodecType.jpeg])
             // ProRAW keeps Apple's multi-frame fusion; single-frame Bayer RAW uses the conservative priority.
             settings.photoQualityPrioritization = proRAW ? .quality : .speed
         } else {
             applyProRAW(false)
-            settings = AVCapturePhotoSettings(format: jpeg)
+            settings = AVCapturePhotoSettings(format: [
+                AVVideoCodecKey: AVVideoCodecType.jpeg,
+                AVVideoCompressionPropertiesKey: [AVVideoQualityKey: 0.95]
+            ])
             settings.photoQualityPrioritization = .quality
         }
         settings.maxPhotoDimensions = output.maxPhotoDimensions
