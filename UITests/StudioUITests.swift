@@ -25,7 +25,7 @@ final class StudioUITests: XCTestCase {
         XCTAssertTrue(app.navigationBars["Archivio"].waitForExistence(timeout: 3))
         XCTAssertTrue(app.staticTexts["Celine bianca"].exists)
         attach(app, name: "03-archivio")
-        app.staticTexts["Celine bianca"].tap()
+        app.cells.containing(.staticText, identifier: "Celine bianca").firstMatch.tap()
         XCTAssertTrue(app.staticTexts["Pronto per il primo scatto"].waitForExistence(timeout: 3))
         app.buttons["Continua a fotografare"].tap()
         XCTAssertTrue(app.buttons["shutter"].waitForExistence(timeout: 3))

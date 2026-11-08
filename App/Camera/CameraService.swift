@@ -174,6 +174,8 @@ final class CameraService: NSObject, ObservableObject {
     }
 
     func focus(at point: CGPoint) {
+        guard point.x.isFinite, point.y.isFinite else { return }
+        let point = CGPoint(x: min(1, max(0, point.x)), y: min(1, max(0, point.y)))
         configureDevice { camera in
             if camera.isFocusPointOfInterestSupported { camera.focusPointOfInterest = point }
             if camera.isFocusModeSupported(.autoFocus) { camera.focusMode = .autoFocus }
