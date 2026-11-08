@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101412">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BLUELLE Studio">
+  <meta name="description" content="Il tuo studio fotografico per prodotti moda. Scatta, organizza e prepara le foto dal tuo iPhone.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <title>BLUELLE Studio</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="BLUELLE Studio"><span>BLUELLE</span><small>Product studio</small></a>
+      <div class="header-actions"><button id="install" class="icon-button" aria-label="Come aggiungere l’app alla Home"><svg viewBox="0 0 24 24"><path d="M12 16V3m-4 4 4-4 4 4M5 13v7h14v-7"/></svg></button><button id="help" class="icon-button" aria-label="Guida allo studio"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4 2c-1 .6-1.5 1-1.5 2.5M12 17h.01"/></svg></button></div>
+    </header>
+    <main>
+      <section class="session-row"><div><span class="eyebrow">La tua sessione</span><h1 id="product-title">Ogni dettaglio conta.</h1></div><button id="new-product" class="add-button" aria-label="Nuovo prodotto">+</button></section>
+      <div class="studio-layout">
+        <section class="photography" aria-label="Foto del prodotto">
+          <div id="viewfinder" class="viewfinder">
+            <div class="frame-meta"><span id="photo-kind">Studio fotografico</span><span id="photo-format">iPhone / web</span></div>
+            <div id="empty-frame" class="empty-frame">
+              <svg class="garment" viewBox="0 0 160 170" aria-hidden="true"><path d="m52 25-32 15-12 36 28 13 9-20v85h70V69l9 20 28-13-12-36-32-15c-7 15-49 15-56 0Z"/><path d="M52 25c3 37 53 37 56 0"/></svg>
+              <h2>Il tuo prodotto.<br>La sua luce.</h2><p>Scatta con l’iPhone o importa una foto.<br>Cominciamo dal fronte.</p>
+              <button id="start-product" class="quiet-link">Crea il primo prodotto <span aria-hidden="true">↗</span></button>
+            </div>
+            <canvas id="preview" hidden aria-label="Anteprima della foto; in modalità riferimento tocca un’area grigia neutra"></canvas>
+            <div id="grid" class="composition-grid" hidden aria-hidden="true"></div>
+            <div class="frame-bottom"><span id="dimensions">File alla risoluzione ricevuta</span><button id="toggle-grid" class="mini-button" aria-label="Mostra griglia di composizione">⊞</button></div>
+          </div>
+          <div class="view-selector-head"><span class="eyebrow">La prossima vista</span><span id="coverage">0 / 6 viste</span></div>
+          <nav id="shot-kinds" class="shot-kinds" aria-label="Vista del prodotto"></nav>
+          <p id="shot-hint" class="shot-hint"></p>
+          <div id="filmstrip" class="filmstrip" aria-label="Scatti della sessione"></div>
+          <label id="photo-tag-row" class="photo-tag-row" hidden>Vista della foto selezionata <select id="photo-tag" aria-label="Cambia vista della foto selezionata"></select></label>
+        </section>
+        <aside class="tools">
+          <div class="tool-heading"><div><span class="eyebrow">Lo studio</span><h2>La foto, come vuoi tu.</h2></div><span class="local-badge"><i></i> Sul dispositivo</span></div>
+          <p id="edit-empty" class="subtle">Dopo il primo scatto, regola luce e colore. Il file ricevuto rimane sempre disponibile.</p>
+          <fieldset id="edit-controls" disabled>
+            <div class="correction-title"><h3>Luce e colore</h3><button id="reset" class="text-button">Ripristina</button></div>
+            <label class="slider-label" for="exposure">Esposizione <output id="exposure-value">0 EV</output></label><input type="range" id="exposure" min="-2" max="2" step="0.05" value="0">
+            <label class="slider-label" for="temperature">Temperatura <output id="temperature-value">0</output></label><input type="range" id="temperature" min="-60" max="60" step="1" value="0">
+            <div class="range-ends"><span>Più fredda</span><span>Più calda</span></div>
+            <label class="slider-label" for="tint">Tinta <output id="tint-value">0</output></label><input type="range" id="tint" min="-40" max="40" step="1" value="0">
+            <button id="pick-neutral" class="outlined wide"><svg viewBox="0 0 24 24"><path d="m15 4 5 5M6 15l9-9 3 3-9 9-5 2 2-5Z"/></svg> Seleziona un grigio neutro</button>
+            <p id="reference-hint" class="tiny">Usa un cartoncino grigio fotografato sotto la stessa luce. Un tessuto bianco non è un riferimento affidabile.</p>
+            <label class="preset-row"><input id="use-preset" type="checkbox"> Usa queste regolazioni sui prossimi scatti</label>
+            <p id="preset-status" class="tiny" hidden></p><button id="clear-preset" class="text-button" hidden>Disattiva il preset della sessione</button>
+            <div class="export-actions"><button id="export-original" class="outlined">File ricevuto <span>↗</span></button><button id="export-edited" class="primary">JPEG corretto <span>↗</span></button></div>
+            <button id="delete-photo" class="text-button muted-danger">Elimina questo scatto</button>
+          </fieldset>
+          <div class="light-note"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg><div><strong>La luce viene prima.</strong><p>Una sola fonte diffusa, lente pulita e telefono parallelo al prodotto.</p></div></div>
+        </aside>
+      </div>
+    </main>
+    <footer class="capture-bar"><button id="open-archive" class="footer-button"><svg viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="14" rx="2"/><path d="M7 4h10M9 1h6"/></svg><span>Archivio</span></button><button id="capture" class="capture-button" aria-label="Scatta con la fotocamera dell’iPhone"><span></span></button><button id="import" class="footer-button"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 16 5-5 5 5 3-3 5 5"/><circle cx="15" cy="9" r="1"/></svg><span>Importa</span></button></footer>
+  </div>
+  <input id="camera-input" type="file" accept="image/*" capture="environment" hidden>
+  <input id="import-input" type="file" accept="image/*,.heic,.heif" multiple hidden>
+  <dialog id="product-dialog" class="sheet"><form id="product-form"><span class="eyebrow">Una sessione, un prodotto</span><h2>Da cosa iniziamo?</h2><label for="product-name">Nome del prodotto</label><input id="product-name" name="name" placeholder="Es. Celine bianca" maxlength="100" required autocomplete="off"><p class="tiny">Fronte, retro, logo e dettagli resteranno insieme.</p><div class="dialog-actions"><button type="button" data-close="product-dialog" class="outlined">Annulla</button><button class="primary" type="submit">Crea sessione</button></div></form></dialog>
+  <dialog id="archive-dialog" class="sheet archive-sheet"><div class="sheet-title"><div><span class="eyebrow">Il tuo archivio</span><h2>Tutti i prodotti.</h2></div><button data-close="archive-dialog" class="icon-button" aria-label="Chiudi archivio">×</button></div><p class="tiny">Le foto restano qui su questo dispositivo. Esportale per conservarne una copia fuori dall’app.</p><div id="products-list"></div><button id="archive-new" class="outlined wide">+ Nuovo prodotto</button></dialog>
+  <dialog id="help-dialog" class="sheet help-sheet"><div class="sheet-title"><h2>Il tuo studio, sull’iPhone.</h2><button data-close="help-dialog" class="icon-button" aria-label="Chiudi guida">×</button></div><ol class="install-steps"><li>Apri questo link in <strong>Safari</strong>.</li><li>Tocca <strong>Condividi</strong> e poi <strong>Aggiungi alla schermata Home</strong>.</li><li>Se compare, lascia attivo <strong>Apri come app web</strong> e tocca <strong>Aggiungi</strong>.</li></ol><p>Aggiungila alla Home prima di creare il tuo archivio: Safari e l’app sulla Home possono avere archivi separati.</p><h3>Scatto e qualità</h3><p>Il pulsante centrale apre la fotocamera di sistema. La pagina conserva i byte del file ricevuto, senza ricomprimerlo. I cursori correggono la foto dopo lo scatto: non controllano il sensore e non aumentano il dettaglio acquisito.</p><p>Per mantenere costanti i colori, usa luce fissa e un riferimento grigio neutro. Il JPEG corretto viene generato solo quando lo esporti; il file ricevuto resta disponibile.</p><h3>Il tuo archivio</h3><p>Le foto non vengono inviate a un server. Il browser può liberare lo spazio locale, e cancellare i dati del sito elimina l’archivio. Esporta regolarmente i file importanti. L’app si apre anche offline dopo il primo caricamento completo.</p><button id="persist-storage" class="outlined wide">Chiedi di conservare l’archivio</button><p id="storage-status" class="tiny"></p></dialog>
+  <div id="toast" role="status" aria-live="polite" hidden></div>
+  <noscript><p>Attiva JavaScript per aprire lo studio fotografico.</p></noscript>
+  <script type="module" src="./app.mjs"></script>
+</body>
+</html>

@@ -1,5 +1,23 @@
 # BLUELLE Studio
 
+## Versione web per iPhone
+
+**[Apri BLUELLE Studio](https://popi99999.github.io/BLUELLE-Studio/)** in Safari, poi **Condividi → Aggiungi alla schermata Home**. Se compare, lascia attivo **Apri come app web**. Per questa versione non serve Xcode.
+
+Aggiungi l’app alla Home prima di creare l’archivio: Safari e l’app sulla Home possono usare archivi separati.
+
+La versione web in `web/` apre la fotocamera di sistema con un input di acquisizione, conserva i byte dei file ricevuti in IndexedDB e organizza le foto per prodotto. Offre correzione di esposizione, temperatura/tinta e riferimento neutro dopo lo scatto, con preset per sessione; esporta file ricevuti o JPEG corretti alla dimensione decodificata dal browser. Le foto con trasparenza usano un fondo bianco nelle anteprime e nei JPEG corretti. Importazioni multiple possono essere riclassificate con il selettore sotto le anteprime.
+
+I controlli web non accedono a RAW, fuoco manuale, ISO o blocco del bilanciamento del sensore su Safari. Nessun controllo hardware non disponibile viene simulato. Il formato e la risoluzione consegnati dalla fotocamera sono decisi da iOS/browser; HEIC e immagini molto grandi possono avere limiti di anteprima/esportazione. Il file ricevuto resta esportabile anche quando il browser non riesce a mostrarne l’anteprima.
+
+Foto e regolazioni rimangono sul dispositivo; non vengono caricate su GitHub o su altri server. Esporta regolarmente una copia: la cancellazione dei dati del sito o la liberazione di spazio da parte del browser possono rimuovere l’archivio. Dopo il primo caricamento completo, il service worker conserva l’interfaccia per l’uso offline. Gli aggiornamenti web devono incrementare il nome cache in `web/sw.js`.
+
+La pubblicazione è gestita da `.github/workflows/pages.yml`, con sorgente GitHub Pages impostata su **GitHub Actions**. Verifica web: `node --test web/tests/*.test.mjs`; anteprima locale: `python3 -m http.server 8767 --directory web`.
+
+Riferimenti: [app sulla Home di iOS](https://webkit.org/blog/13878/), [configurazione web app Apple](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html), [Image Capture API](https://developer.mozilla.org/en-US/docs/Web/API/ImageCapture).
+
+## App nativa per iPhone
+
 Fotocamera nativa per iPhone dedicata a prodotti moda: una serie coerente di foto del capo, del logo, delle etichette e dei dettagli.
 
 **Prima versione da provare su un iPhone reale.** I controlli sul nucleo sono eseguibili sul Mac; la build iOS e le schermate del simulatore sono verificate dal workflow GitHub Actions. Un simulatore non può verificare messa a fuoco, colori o RAW di una fotocamera fisica. Non è stata misurata una percentuale di miglioramento rispetto a Fotocamera Apple.
